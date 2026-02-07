@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class NavigationService {
   late GlobalKey<NavigatorState> navigationKey;
-
   NavigationService() {
     navigationKey = GlobalKey<NavigatorState>();
   }
@@ -19,5 +18,13 @@ class NavigationService {
       context: navigationKey.currentContext!,
       builder: (context) => widget,
     );
+  }
+
+  void showSnakbar(String message) async {
+    final context = navigationKey.currentContext!;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    final _snackBarWidget = SnackBar(content: Text('content'));
+    ScaffoldMessenger.of(context).showSnackBar(_snackBarWidget);
   }
 }

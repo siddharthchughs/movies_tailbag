@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
 import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
@@ -15,7 +16,7 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MoviesState extends State<MovieScreen> {
-  List<MoviesModel> _movies = [];
+  final List<MoviesModel> _movies = [];
   int currentPage = 1;
   bool _isFetched = false;
   final ScrollController _scrollController = ScrollController();
@@ -41,10 +42,10 @@ class _MoviesState extends State<MovieScreen> {
       _isFetched = true;
     });
     try {
-      final List<MoviesModel> _newMoviesList = await getIt<MoviesRepository>()
+      final List<MoviesModel> newMoviesList = await getIt<MoviesRepository>()
           .getPopularMovies(page: currentPage);
       setState(() {
-        _movies.addAll(_newMoviesList);
+        _movies.addAll(newMoviesList);
         currentPage++;
       });
     } catch (error) {
@@ -62,7 +63,19 @@ class _MoviesState extends State<MovieScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<MoviesModel> listOfMovies = [];
+    Widget content = _movies.isNotEmpty
+        ? ListView.builder(
+            controller: _scrollController,
+            padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
+            itemCount: _movies.length + (_isFetched ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index < _movies.length) {
+                return MovieItemLayout(moviesModel: _movies[index]);
+              }
+              return const Center(child: Text('Loading...'));
+            },
+          )
+        : Center(child: CupertinoActivityIndicator());
 
     return Scaffold(
       appBar: AppBar(
@@ -72,10 +85,7 @@ class _MoviesState extends State<MovieScreen> {
             onPressed: () {
               getIt<NavigationService>().navigateTo(FavoriteMovies());
             },
-            icon: Icon(
-              MyCustomIcons.favorites,
-              color: Colors.lightGreenAccent.shade400,
-            ),
+            icon: Icon(MyCustomIcons.favorites, color: Colors.blue.shade400),
           ),
           IconButton(
             onPressed: () async {},
@@ -89,10 +99,9 @@ class _MoviesState extends State<MovieScreen> {
         itemCount: _movies.length + (_isFetched ? 1 : 0),
         itemBuilder: (context, index) {
           if (index < _movies.length) {
-            return MovieItemLayout();
-          } else {
-            return const Center(child: CircularProgressIndicator());
+            return MovieItemLayout(moviesModel: _movies[index]);
           }
+          return const Center(child: Text('Loading...'));
         },
       ),
     );

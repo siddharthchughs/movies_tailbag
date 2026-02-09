@@ -1,33 +1,79 @@
+import 'dart:convert';
+
 class MoviesModel {
-  int? page;
-  List<Results>? results;
-  int? totalPages;
-  int? totalResults;
+  bool? adult;
+  String? backdropPath;
+  List<int>? genreIds;
+  int? id;
+  String? originalLanguage;
+  String originalTitle;
+  String overview;
+  double popularity;
+  String posterPath;
+  String releaseDate;
+  String title;
+  bool? video;
+  double voteAverage;
+  int voteCount;
 
-  MoviesModel({this.page, this.results, this.totalPages, this.totalResults});
+  MoviesModel({
+    required this.adult,
+    required this.backdropPath,
+    required this.genreIds,
+    required this.id,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.overview,
+    required this.popularity,
+    required this.posterPath,
+    required this.releaseDate,
+    required this.title,
+    required this.video,
+    required this.voteAverage,
+    required this.voteCount,
+  });
 
-  MoviesModel.fromJson(Map<String, dynamic> json) {
-    page = json['page'];
-    if (json['results'] != null) {
-      results = <Results>[];
-      json['results'].forEach((v) {
-        results!.add(Results.fromJson(v));
-      });
-    }
-    totalPages = json['total_pages'];
-    totalResults = json['total_results'];
+  factory MoviesModel.fromJson(Map mapJson) {
+    return MoviesModel(
+      adult: mapJson['adult'],
+      backdropPath: mapJson['backdrop_path'],
+      genreIds: mapJson['genre_ids'].cast<int>(),
+      id: mapJson['id'],
+      originalLanguage: mapJson['original_language'],
+      originalTitle: mapJson['original_title'],
+      overview: mapJson['overview'],
+      popularity: mapJson['popularity'],
+      posterPath: mapJson['poster_path'],
+      releaseDate: mapJson['release_date'],
+      title: mapJson['title'],
+      video: mapJson['video'],
+      voteAverage: mapJson['vote_average'],
+      voteCount: mapJson['vote_count'],
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['page'] = page;
-    if (results != null) {
-      data['results'] = results!.map((v) => v.toJson()).toList();
-    }
-    data['total_pages'] = totalPages;
-    data['total_results'] = totalResults;
-    return data;
-  }
+  // MoviesModel.fromJson(Map<String, dynamic> json) {
+  //   page = json['page'];
+  //   if (json['results'] != null) {
+  //     results = <Results>[];
+  //     json['results'].forEach((v) {
+  //       results!.add(Results.fromJson(v));
+  //     });
+  //   }
+  //   totalPages = json['total_pages'];
+  //   totalResults = json['total_results'];
+  // }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['page'] = page;
+  //   if (results != null) {
+  //     data['results'] = results!.map((v) => v.toJson()).toList();
+  //   }
+  //   data['total_pages'] = totalPages;
+  //   data['total_results'] = totalResults;
+  //   return data;
+  // }
 }
 
 class Results {

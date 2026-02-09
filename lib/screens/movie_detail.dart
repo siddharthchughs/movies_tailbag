@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_deault_image_constant.dart';
+import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
 import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
 
 class MovieDetail extends StatelessWidget {
-  const MovieDetail({super.key});
+  MovieDetail({super.key, required this.moviesModel});
+  MoviesModel moviesModel;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,10 @@ class MovieDetail extends StatelessWidget {
             SizedBox(
               height: size.height * 0.45,
               width: double.infinity,
-              child: CacheImage(url: MyDeaultImageConstant.imageUrl),
+              child: CacheImage(
+                url:
+                    'https://image.tmdb.org/t/p/w500/${moviesModel.backdropPath}',
+              ),
             ),
             SingleChildScrollView(
               child: Column(
@@ -37,10 +42,10 @@ class MovieDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 25.0),
-                                const Text('Movie Title'),
+                                Text(moviesModel.title),
                                 const SizedBox(height: 8),
                                 const SizedBox(height: 5.0),
-                                const Row(
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
@@ -52,8 +57,7 @@ class MovieDetail extends StatelessWidget {
                                             color: Colors.blue,
                                           ),
                                           SizedBox(width: 12.0),
-
-                                          Text('8/10'),
+                                          Text('${moviesModel.voteAverage}/10'),
                                         ],
                                       ),
                                     ),
@@ -63,17 +67,19 @@ class MovieDetail extends StatelessWidget {
                                             MainAxisAlignment.end,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
-                                        children: [Text('Release Date')],
+                                        children: [
+                                          Text(moviesModel.releaseDate),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(width: 12),
                                   ],
                                 ),
                                 const SizedBox(height: 15.0),
-                                const GenresListWidget(),
+                                // GenresListWidget(),
                                 const SizedBox(height: 15.0),
                                 Text(
-                                  'overview \t' * 200,
+                                  moviesModel.overview,
                                   textAlign: TextAlign.justify,
                                 ),
                               ],

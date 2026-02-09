@@ -25,7 +25,7 @@ class FavoriteMovies extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
         itemCount: 10,
         itemBuilder: (context, index) {
-          return const MovieItemLayout();
+          return;
         },
       ),
     );

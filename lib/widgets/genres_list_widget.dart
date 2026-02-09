@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_deault_image_constant.dart';
+import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 
 class GenresListWidget extends StatelessWidget {
-  const GenresListWidget({super.key});
+  GenresListWidget({super.key, required this.moviesModel});
+  MoviesModel moviesModel;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class GenresListWidget extends StatelessWidget {
       spacing: 2.0,
 
       children: List.generate(
-        MyDeaultImageConstant.genres.length,
+        moviesModel.genreIds!.length,
         (index) => chipWidget(
           generItem: MyDeaultImageConstant.genres[index],
           context: context,

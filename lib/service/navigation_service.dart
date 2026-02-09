@@ -24,7 +24,7 @@ class NavigationService {
     final context = navigationKey.currentContext!;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-    final _snackBarWidget = SnackBar(content: Text('content'));
-    ScaffoldMessenger.of(context).showSnackBar(_snackBarWidget);
+    final snackBarWidget = SnackBar(content: Text('content'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBarWidget);
   }
 }

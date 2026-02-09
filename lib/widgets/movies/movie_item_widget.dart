@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_deault_image_constant.dart';
+import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
+import 'package:mvvm_moviecatalog_app/screens/movie_detail.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
 import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
@@ -7,7 +9,8 @@ import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
 import 'package:mvvm_moviecatalog_app/widgets/movie_favorite_widget.dart';
 
 class MovieItemLayout extends StatelessWidget {
-  const MovieItemLayout({super.key});
+  MovieItemLayout({super.key, required this.moviesModel});
+  MoviesModel moviesModel;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +23,10 @@ class MovieItemLayout extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10.0),
           onTap: () {
-            getIt<NavigationService>().showDialog(Text('Error'));
-            //            getIt<NavigationService>().navigateTo(MovieDetail());
+            //            getIt<NavigationService>().showDialog(Text('Error'));
+            getIt<NavigationService>().navigateTo(
+              MovieDetail(moviesModel: moviesModel),
+            );
           },
           child: Padding(
             padding: EdgeInsets.fromLTRB(12.0, 8, 8, 0),
@@ -32,7 +37,11 @@ class MovieItemLayout extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: CacheImage(url: MyDeaultImageConstant.imageUrl),
+                    child: CacheImage(
+                      height: 200,
+                      url:
+                          'https://image.tmdb.org/t/p/w400/${moviesModel.posterPath}',
+                    ),
                   ),
                   const SizedBox(width: 18.0),
                   Expanded(
@@ -41,7 +50,7 @@ class MovieItemLayout extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          'Bad Boys',
+                          moviesModel.title,
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w300,
@@ -57,12 +66,12 @@ class MovieItemLayout extends StatelessWidget {
                             ),
                             const SizedBox(width: 18.0),
 
-                            Text('8/120'),
+                            Text('${moviesModel.voteAverage}/10'),
                             const SizedBox(height: 12),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        GenresListWidget(),
+                        GenresListWidget(moviesModel: moviesModel),
                         const SizedBox(height: 12),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,

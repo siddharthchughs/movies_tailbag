@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_moviecatalog_app/constants/my_deault_image_constant.dart';
 import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/screens/movie_detail.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';

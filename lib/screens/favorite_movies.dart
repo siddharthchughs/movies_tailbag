@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
-import 'package:mvvm_moviecatalog_app/widgets/movies/movie_item_widget.dart';
 
 class FavoriteMovies extends StatelessWidget {
   const FavoriteMovies({super.key});

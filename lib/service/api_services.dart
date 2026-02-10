@@ -10,7 +10,9 @@ class ApiServices {
     final url = Uri.parse(
       "${MyApiConstants.baseUrl}/movie/popular?language=en-US&page=$page",
     );
-    final response = await http.get(url, headers: MyApiConstants().headers);
+    final response = await http
+        .get(url, headers: MyApiConstants().headers)
+        .timeout(Duration(seconds: 3));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       print(data);
@@ -24,12 +26,15 @@ class ApiServices {
 
   Future<List<GenreModel>> getGenre() async {
     final url = Uri.parse("${MyApiConstants.baseUrl}/genre/movie/list");
-    final response = await http.get(url, headers: MyApiConstants().headers);
+    final response = await http
+        .get(url, headers: MyApiConstants().headers)
+        .timeout(Duration(seconds: 3));
     if (response.statusCode == 200) {
-      final genreData = jsonDecode(response.body);
-      print(genreData);
+      final dataInResponse = jsonDecode(response.body);
       return List.from(
-        genreData['genres'].map((elements) => GenreModel.fromJson(elements)),
+        dataInResponse['genres'].map(
+          (elements) => GenreModel.fromJson(elements),
+        ),
       );
     } else {
       throw Exception('failed to load movies:: ${response.statusCode}');

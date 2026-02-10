@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mvvm_moviecatalog_app/screens/movie_screen.dart';
+import 'package:mvvm_moviecatalog_app/screens/splash_screen.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
 import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: MovieScreen(),
+      home: SplashScreen(),
     );
   }
 }

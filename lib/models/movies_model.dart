@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 class MoviesModel {
   bool? adult;
   String? backdropPath;
-  List<int>? genreIds;
+  List<int> genreIds;
   int? id;
   String? originalLanguage;
   String originalTitle;

@@ -13,23 +13,23 @@ class MyErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Icon(MyCustomIcons.error, color: Colors.red, size: 48),
-          const SizedBox(height: 20.0),
-          Text(
-            'Error: $errorText',
-            style: TextStyle(color: Colors.redAccent.shade400, fontSize: 30.0),
-          ),
-          const SizedBox(height: 20.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(MyCustomIcons.error, color: Colors.red, size: 48),
+        const SizedBox(height: 20.0),
+        Text(
+          'Error: $errorText',
+          style: TextStyle(color: Colors.redAccent.shade400, fontSize: 30.0),
+        ),
+        const SizedBox(height: 20.0),
 
-          ElevatedButton(
-            onPressed: retryConnection(),
-            child: Text('Retry Again'),
-          ),
-        ],
-      ),
+        ElevatedButton(
+          onPressed: retryConnection(),
+          child: Text('Retry Again'),
+        ),
+      ],
     );
   }
 }

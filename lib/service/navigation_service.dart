@@ -12,6 +12,13 @@ class NavigationService {
     );
   }
 
+  Future<dynamic>? clearStackNavigate(Widget navigate) {
+    return navigationKey.currentState?.pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => navigate),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   void showDialog(Widget widget) async {
     await showAdaptiveDialog(
       barrierDismissible: true,

@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   String _errorMessage = '';
   final _movieRespository = getIt<MoviesRepository>();
 
-  Future<void> retryConnection() async {
+  Future<void> _loadMore() async {
     setState(() {
       _isLoading = true;
       _errorMessage = '';
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    retryConnection();
+    _loadMore();
   }
 
   @override
@@ -56,10 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             )
-          : MyErrorWidget(
-              errorText: '${_errorMessage}',
-              retryConnection: retryConnection,
-            ),
+          : MyErrorWidget(errorText: 'errorText', retryConnection: _loadMore),
     );
   }
 }

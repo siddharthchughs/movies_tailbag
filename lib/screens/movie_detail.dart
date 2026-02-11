@@ -3,7 +3,6 @@ import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
 import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
-import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
 
 class MovieDetail extends StatelessWidget {
   MovieDetail({super.key, required this.moviesModel});

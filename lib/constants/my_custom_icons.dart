@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyCustomIcons {
-  static const IconData favorites = Icons.favorite_border_rounded;
+  static const IconData unselectedfavorite = Icons.favorite_border_rounded;
   static const IconData favorite_heart = Icons.favorite_outlined;
   static const IconData colorModeChange = Icons.dark_mode_outlined;
   static const IconData arrow_right = Icons.arrow_forward_ios_rounded;

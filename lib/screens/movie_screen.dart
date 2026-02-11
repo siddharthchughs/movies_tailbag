@@ -20,7 +20,6 @@ class _MoviesState extends State<MovieScreen> {
   int currentPage = 1;
   bool _isFetched = false;
   final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -67,7 +66,7 @@ class _MoviesState extends State<MovieScreen> {
         ? ListView.builder(
             controller: _scrollController,
             padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
-            itemCount: _movies.length + (_isFetched ? 1 : 0),
+            itemCount: _movies.length,
             itemBuilder: (context, index) {
               if (index < _movies.length) {
                 return MovieItemLayout(moviesModel: _movies[index]);
@@ -85,7 +84,10 @@ class _MoviesState extends State<MovieScreen> {
             onPressed: () {
               getIt<NavigationService>().navigateTo(FavoriteMovies());
             },
-            icon: Icon(MyCustomIcons.favorites, color: Colors.blue.shade400),
+            icon: Icon(
+              MyCustomIcons.favorite_heart,
+              color: Colors.blue.shade400,
+            ),
           ),
           IconButton(
             onPressed: () async {},
@@ -104,6 +106,20 @@ class _MoviesState extends State<MovieScreen> {
           return const Center(child: Text('Loading...'));
         },
       ),
+
+      //return const Center(child: Text('Loading...'));
+
+      //  ListView.builder(
+      //   controller: _scrollController,
+      //   padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
+      //   itemCount: _movies.length + (_isFetched ? 1 : 0),
+      //   itemBuilder: (context, index) {
+      //     if (index < _movies.length) {
+      //       return MovieItemLayout(moviesModel: _movies[index]);
+      //     }
+      //     return const Center(child: Text('Loading...'));
+      //   },
+      // ),
     );
   }
 }

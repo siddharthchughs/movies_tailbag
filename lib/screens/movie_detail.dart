@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
 import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
+import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
 
 class MovieDetail extends StatelessWidget {
   MovieDetail({super.key, required this.moviesModel});
@@ -20,7 +22,7 @@ class MovieDetail extends StatelessWidget {
               width: double.infinity,
               child: CacheImage(
                 url:
-                    'https://image.tmdb.org/t/p/w500/${moviesModel.backdropPath}',
+                    '${MyApiConstants.imageBaseUrl_500D}${moviesModel.backdropPath}',
               ),
             ),
             SingleChildScrollView(
@@ -55,7 +57,9 @@ class MovieDetail extends StatelessWidget {
                                             color: Colors.blue,
                                           ),
                                           SizedBox(width: 12.0),
-                                          Text('${moviesModel.voteAverage}/10'),
+                                          Text(
+                                            '${moviesModel.voteAverage.toStringAsFixed(1)}/10',
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -74,7 +78,7 @@ class MovieDetail extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 15.0),
-                                // GenresListWidget(),
+                                GenresListWidget(moviesModel: moviesModel),
                                 const SizedBox(height: 15.0),
                                 Text(
                                   moviesModel.overview,
@@ -90,12 +94,12 @@ class MovieDetail extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.amberAccent,
+                            color: Colors.white,
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Icon(MyCustomIcons.favorites),
+                            child: Icon(MyCustomIcons.unselectedfavorite),
                           ),
                         ),
                       ),

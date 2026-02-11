@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
 import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/screens/movie_detail.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
@@ -8,8 +9,8 @@ import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
 import 'package:mvvm_moviecatalog_app/widgets/movie_favorite_widget.dart';
 
 class MovieItemLayout extends StatelessWidget {
-  MovieItemLayout({super.key, required this.moviesModel});
-  MoviesModel moviesModel;
+  const MovieItemLayout({super.key, required this.moviesModel});
+  final MoviesModel moviesModel;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class MovieItemLayout extends StatelessWidget {
                     child: CacheImage(
                       height: 200,
                       url:
-                          'https://image.tmdb.org/t/p/w400/${moviesModel.posterPath}',
+                          '${MyApiConstants.imageBaseUrl_300D}${moviesModel.posterPath}',
                     ),
                   ),
                   const SizedBox(width: 18.0),
@@ -64,8 +65,9 @@ class MovieItemLayout extends StatelessWidget {
                               color: Colors.blue,
                             ),
                             const SizedBox(width: 18.0),
-
-                            Text('${moviesModel.voteAverage}/10'),
+                            Text(
+                              '${moviesModel.voteAverage.toStringAsFixed(1)}/10',
+                            ),
                             const SizedBox(height: 12),
                           ],
                         ),
@@ -84,13 +86,12 @@ class MovieItemLayout extends StatelessWidget {
                                     color: Colors.blue,
                                   ),
                                   const SizedBox(width: 12.0),
-
-                                  Text('2026-09-03'),
+                                  Text(moviesModel.releaseDate),
                                 ],
                               ),
                             ),
                             const SizedBox(width: 12),
-                            MovieFavoriteWidget(),
+                            MovieFavoriteWidget(model: moviesModel),
                           ],
                         ),
                       ],

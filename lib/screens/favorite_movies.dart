@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
 
-class FavoriteMovies extends StatelessWidget {
+class FavoriteMovies extends StatefulWidget {
   const FavoriteMovies({super.key});
+
+  @override
+  State<FavoriteMovies> createState() => _FavoriteMoviesState();
+}
+
+class _FavoriteMoviesState extends State<FavoriteMovies> {
+  final _favouriteMovies = [];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class FavoriteMovies extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
         itemCount: 10,
         itemBuilder: (context, index) {
-          return;
+          return Text('Data::$index');
         },
       ),
     );

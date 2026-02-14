@@ -10,4 +10,5 @@ class MyApiConstants {
     'Authorization': 'Bearer $access_token',
     'accept': 'application/json',
   };
+  static const String themeModeKey = 'THEME_MODE';
 }

@@ -9,7 +9,10 @@ class GenresListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<GenreModel> genres = GenresUtility.movieGenre(moviesModel.genreIds);
+    List<GenreModel> genres = GenresUtility.movieGenre(
+      [],
+      //moviesModel.genreIds
+    );
     return Wrap(
       direction: Axis.horizontal,
       alignment: WrapAlignment.start,
@@ -29,13 +32,13 @@ class GenresListWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.lightBlue.shade200,
+          color: Colors.deepPurple.shade400,
           borderRadius: BorderRadius.circular(30.0),
           shape: BoxShape.rectangle,
-          border: Border.all(color: Colors.lightBlueAccent.shade400),
+          border: Border.all(color: Colors.limeAccent.shade400),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+          padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
           child: Text(
             generItem,
             style: TextStyle(fontSize: 14.0, color: Colors.white),

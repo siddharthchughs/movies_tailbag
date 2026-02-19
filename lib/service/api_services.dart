@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
 import 'package:mvvm_moviecatalog_app/models/genre_model.dart';
@@ -12,10 +11,10 @@ class ApiServices {
     );
     final response = await http
         .get(url, headers: MyApiConstants().headers)
-        .timeout(Duration(seconds: 3));
+        .timeout(Duration(seconds: 30));
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
       return List.from(
         data['results'].map((elements) => MoviesModel.fromJson(elements)),
       );
@@ -28,7 +27,7 @@ class ApiServices {
     final url = Uri.parse("${MyApiConstants.baseUrl}/genre/movie/list");
     final response = await http
         .get(url, headers: MyApiConstants().headers)
-        .timeout(Duration(seconds: 3));
+        .timeout(Duration(seconds: 10));
     if (response.statusCode == 200) {
       final dataInResponse = jsonDecode(response.body);
       return List.from(

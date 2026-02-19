@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/models/genre_model.dart';
 import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/utility/genres_utility.dart';
+import 'package:provider/provider.dart';
 
 class GenresListWidget extends StatelessWidget {
   GenresListWidget({super.key, required this.moviesModel});
@@ -9,9 +10,10 @@ class GenresListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final movieProvider = Provider.of<MoviesModel>(context);
     List<GenreModel> genres = GenresUtility.movieGenre(
-      [],
-      //moviesModel.genreIds
+      movieProvider.genreIds,
+      context,
     );
     return Wrap(
       direction: Axis.horizontal,

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_moviecatalog_app/constants/my_deault_image_constant.dart';
+import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
+import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
+import 'package:mvvm_moviecatalog_app/screens/movie_detail_pvdr.dart';
+import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
+import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
+import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
 import 'package:mvvm_moviecatalog_app/widgets/movie_favorite_pprvdr_widget.dart';
+import 'package:provider/provider.dart';
 
 class MovieItemLayoutPvdr extends StatelessWidget {
-  const MovieItemLayoutPvdr({
-    super.key,
-    //required this.moviesModel
-  });
-  //  final MoviesModel moviesModel;
+  const MovieItemLayoutPvdr({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final movieProvider = Provider.of<MoviesModel>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Material(
@@ -21,9 +25,12 @@ class MovieItemLayoutPvdr extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
           onTap: () {
             //            getIt<NavigationService>().showDialog(Text('Error'));
-            //            getIt<NavigationService>().navigateTo(
-            //            MovieDetail(moviesModel: moviesModel),
-            //        );
+            getIt<NavigationService>().navigateTo(
+              ChangeNotifierProvider.value(
+                value: movieProvider,
+                child: MovieDetailPvdr(),
+              ),
+            );
           },
           child: Padding(
             padding: EdgeInsets.fromLTRB(12.0, 4, 4, 0),
@@ -36,18 +43,18 @@ class MovieItemLayoutPvdr extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: CacheImage(
                       height: 200,
-                      url: MyDeaultImageConstant.imageUrl,
-                      //        '${MyApiConstants.imageBaseUrl_300D}${moviesModel.posterPath}',
+                      url:
+                          '${MyApiConstants.imageBaseUrl_300D}${movieProvider.posterPath}',
                     ),
                   ),
                   const SizedBox(width: 18.0),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'moviesModel.title',
+                          movieProvider.title,
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w300,
@@ -64,37 +71,26 @@ class MovieItemLayoutPvdr extends StatelessWidget {
                             const SizedBox(width: 18.0),
 
                             Text(
-                              '0.8/10',
-                              //                              '${moviesModel.voteAverage.toStringAsFixed(1)}/10',
+                              '${movieProvider.voteAverage.toStringAsFixed(1)}/10',
                             ),
                             const SizedBox(height: 12),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        // GenresListWidget(moviesModel: moviesModel),
+                        GenresListWidget(moviesModel: movieProvider),
                         const SizedBox(height: 12),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.watch_later_outlined,
-                                    color: Colors.blue,
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                  Text('date'),
-                                ],
-                              ),
+                            const Icon(
+                              Icons.watch_later_outlined,
+                              color: Colors.blue,
                             ),
-                            Row(
-                              children: [
-                                MovieFavoritePprvdrWidget(),
-                                //                                MovieFavoriteWidget(model: moviesModel),
-                              ],
-                            ),
+                            const SizedBox(width: 8.0),
+                            Text(movieProvider.releaseDate),
+                            const Spacer(),
+                            MovieFavoritePprvdrWidget(model: movieProvider),
                           ],
                         ),
                       ],

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
+import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
 import 'package:mvvm_moviecatalog_app/widgets/genres_item_widget_pvdr.dart';
+import 'package:mvvm_moviecatalog_app/widgets/movie_favorite_pprvdr_widget.dart';
+import 'package:provider/provider.dart';
 
 class MovieDetailPvdr extends StatelessWidget {
-  const MovieDetailPvdr({
-    super.key,
-    //required this.moviesModel
-  });
-  //  MoviesModel moviesModel;
+  const MovieDetailPvdr({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final movieProvider = Provider.of<MoviesModel>(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('Detail')),
@@ -22,8 +23,9 @@ class MovieDetailPvdr extends StatelessWidget {
               height: size.height * 0.45,
               width: double.infinity,
               child: CacheImage(
-                url: '${MyCustomIcons.arrow_back}',
-                //                    '${MyApiConstants.imageBaseUrl_500D}${moviesModel.backdropPath}',
+                url:
+                    //'${MyCustomIcons.arrow_back}',
+                    '${MyApiConstants.imageBaseUrl_500D}${movieProvider.backdropPath}',
               ),
             ),
             SingleChildScrollView(
@@ -43,7 +45,7 @@ class MovieDetailPvdr extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 25.0),
-                                Text('moviesModel.title'),
+                                Text(movieProvider.title),
                                 const SizedBox(height: 8),
                                 const SizedBox(height: 5.0),
                                 Row(
@@ -59,8 +61,7 @@ class MovieDetailPvdr extends StatelessWidget {
                                           ),
                                           SizedBox(width: 12.0),
                                           Text(
-                                            '0.8/10',
-                                            //                                            '${moviesModel.voteAverage.toStringAsFixed(1)}/10',
+                                            '${movieProvider.voteAverage.toStringAsFixed(1)}/10',
                                           ),
                                         ],
                                       ),
@@ -72,7 +73,7 @@ class MovieDetailPvdr extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Text('moviesModel.releaseDate'),
+                                          Text(movieProvider.releaseDate),
                                         ],
                                       ),
                                     ),
@@ -83,7 +84,7 @@ class MovieDetailPvdr extends StatelessWidget {
                                 GenresItemWidgetPvdr(),
                                 const SizedBox(height: 15.0),
                                 Text(
-                                  'moviesModel.overview',
+                                  movieProvider.overview,
                                   textAlign: TextAlign.justify,
                                 ),
                               ],
@@ -101,7 +102,9 @@ class MovieDetailPvdr extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Icon(MyCustomIcons.unselectedfavorite),
+                            child: MovieFavoritePprvdrWidget(
+                              model: movieProvider,
+                            ),
                           ),
                         ),
                       ),

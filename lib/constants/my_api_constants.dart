@@ -11,4 +11,5 @@ class MyApiConstants {
     'accept': 'application/json',
   };
   static const String themeModeKey = 'THEME_MODE';
+  static const String favoritesKey = 'favorites';
 }

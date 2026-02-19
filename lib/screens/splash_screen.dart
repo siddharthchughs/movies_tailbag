@@ -16,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isLoading = true;
   String _errorMessage = '';
   final _movieRespository = getIt<MoviesRepository>();
+  final moviePage = 1;
 
   Future<void> _loadMore() async {
     setState(() {
@@ -24,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     try {
       await _movieRespository.getGenres();
+      await _movieRespository.getPopularMovies(page: moviePage);
       await getIt<NavigationService>().navigateTo(MovieScreenpvdr());
     } catch (err) {
       _errorMessage = err.toString();

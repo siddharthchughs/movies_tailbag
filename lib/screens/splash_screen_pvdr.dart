@@ -1,26 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_moviecatalog_app/screens/movie_screenpvdr.dart';
+import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
+import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
+import 'package:mvvm_moviecatalog_app/viewmodel/favorites_providers.dart';
+import 'package:mvvm_moviecatalog_app/viewmodel/movie_provider.dart'
+    show MovieProvider;
 import 'package:mvvm_moviecatalog_app/widgets/error_widget.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreenPvdr extends StatelessWidget {
   const SplashScreenPvdr({super.key});
 
+  Future<void> _loadInitialData(BuildContext context) async {
+    await Future.microtask(() async {
+      if (!context.mounted) return;
+      await Provider.of<FavoritesProviders>(
+        context,
+        listen: false,
+      ).loadFavorites();
+      if (!context.mounted) return;
+      await Provider.of<MovieProvider>(context, listen: false).getMovies();
+    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   Provider.of<MovieProvider>(context, listen: false).getMovies();
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final movieProvider = Provider.of<MovieProvider>(context, listen: false);
     return Scaffold(
-      body: true
-          ? const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Loading...'),
-                  SizedBox(height: 20.0),
-                  CircularProgressIndicator(),
-                ],
-              ),
-            )
-          : MyErrorWidget(errorText: 'errorText', retryConnection: () {}),
+      backgroundColor: Colors.blueAccent.shade200,
+      body: FutureBuilder(
+        future: _loadInitialData(context),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            if (movieProvider.movieGenresLoaded.isNotEmpty) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                getIt<NavigationService>().navigationReplace(MovieScreenpvdr());
+              });
+            }
+            return Provider.of<MovieProvider>(context).isLoading
+                ? const Center(child: CircularProgressIndicator.adaptive())
+                : MyErrorWidget(
+                    errorText: 'Error ${snapshot.error.toString()}',
+                    retryConnection: () async {
+                      await _loadInitialData(context);
+                    },
+                  );
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              getIt<NavigationService>().navigationReplace(MovieScreenpvdr());
+            });
+
+            return const SizedBox.shrink();
+          }
+        },
+      ),
     );
   }
 }

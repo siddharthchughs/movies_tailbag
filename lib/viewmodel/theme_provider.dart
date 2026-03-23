@@ -3,8 +3,6 @@ import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum ThemeMode { LIGHT_MODE, DARK_MODE }
-
 class ThemeProvider with ChangeNotifier {
   ThemeData themeMode = MyAppTheme.lightTheme;
 

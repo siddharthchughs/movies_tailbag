@@ -1,11 +1,11 @@
-import 'package:mvvm_moviecatalog_app/models/genre_model.dart';
-import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
-import 'package:mvvm_moviecatalog_app/service/api_services.dart';
+import '../models/genre_model.dart';
+import '../models/movies_model.dart';
+import '../service/api_services.dart';
 
 class MoviesRepository {
   final ApiServices _apiServices;
+
   MoviesRepository(this._apiServices);
-  //  List<GenreModel> cacheGenre = [];
 
   Future<List<MoviesModel>> getPopularMovies({int page = 1}) async {
     return await _apiServices.getPopularMovies(page: page);
@@ -15,7 +15,9 @@ class MoviesRepository {
     return await _apiServices.getGenre();
   }
 
-  // Future<List<GenreModel>> getGenres() async {
-  //   return cacheGenre = await _apiServices.getGenre();
-  // }
+  List<GenreModel> cacheGenre = [];
+
+  Future<List<GenreModel>> getGenresFromCache() async {
+    return cacheGenre = await _apiServices.getGenre();
+  }
 }

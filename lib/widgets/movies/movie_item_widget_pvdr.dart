@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
-import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
-import 'package:mvvm_moviecatalog_app/screens/movie_detail_pvdr.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
-import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
-import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
-import 'package:mvvm_moviecatalog_app/widgets/genres_list_widget.dart';
-import 'package:mvvm_moviecatalog_app/widgets/movie_favorite_pprvdr_widget.dart';
+import 'package:mvvm_moviecatalog_app/widgets/genres_item_widget_pvdr.dart';
 import 'package:provider/provider.dart';
+import '../../constants/my_api_constants.dart';
+import '../../models/movies_model.dart';
+import '../../screens/movie_detail_pvdr.dart';
+import '../../service/navigation_service.dart';
+import '../cache_image.dart';
+import '../movie_favorite_pprvdr_widget.dart';
 
 class MovieItemLayoutPvdr extends StatelessWidget {
   const MovieItemLayoutPvdr({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final movieProvider = Provider.of<MoviesModel>(context);
+    final movieProvider = Provider.of<MoviesModel>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Material(
-        color: Theme.of(context).primaryColorLight,
+        color: Colors.lightGreenAccent.shade100,
         borderRadius: BorderRadius.circular(12),
         elevation: 2.0,
         child: InkWell(
@@ -44,6 +44,7 @@ class MovieItemLayoutPvdr extends StatelessWidget {
                     child: CacheImage(
                       height: 200,
                       url:
+                          //'${MyDeaultImageConstant.imageUrl}',
                           '${MyApiConstants.imageBaseUrl_300D}${movieProvider.posterPath}',
                     ),
                   ),
@@ -69,15 +70,14 @@ class MovieItemLayoutPvdr extends StatelessWidget {
                               color: Colors.blue,
                             ),
                             const SizedBox(width: 18.0),
-
                             Text(
-                              '${movieProvider.voteAverage.toStringAsFixed(1)}/10',
+                              '${movieProvider.voteAverage.toStringAsFixed(2)} / 10',
                             ),
                             const SizedBox(height: 12),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        GenresListWidget(moviesModel: movieProvider),
+                        GenresItemWidgetPvdr(moviesModel: movieProvider),
                         const SizedBox(height: 12),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

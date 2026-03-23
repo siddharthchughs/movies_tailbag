@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
-import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants/my_api_constants.dart';
+import '../models/movies_model.dart';
 
 class FavoritesProviders with ChangeNotifier {
   final List<MoviesModel> _favoriteList = [];

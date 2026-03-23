@@ -11,6 +11,7 @@ class GenresListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<MoviesModel>(context);
+
     List<GenreModel> genres = GenresUtility.movieGenre(
       movieProvider.genreIds,
       context,

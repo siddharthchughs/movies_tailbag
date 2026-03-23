@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:mvvm_moviecatalog_app/constants/my_api_constants.dart';
-import 'package:mvvm_moviecatalog_app/models/genre_model.dart';
-import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
+
+import '../constants/my_api_constants.dart';
+import '../models/genre_model.dart';
+import '../models/movies_model.dart';
 
 class ApiServices {
   Future<List<MoviesModel>> getPopularMovies({int page = 1}) async {
@@ -15,6 +16,7 @@ class ApiServices {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      print("Movies fetched successfully: ${data.toString()} movies");
       return List.from(
         data['results'].map((elements) => MoviesModel.fromJson(elements)),
       );
@@ -30,6 +32,7 @@ class ApiServices {
         .timeout(Duration(seconds: 10));
     if (response.statusCode == 200) {
       final dataInResponse = jsonDecode(response.body);
+      print("Genres fetched successfully: ${dataInResponse.toString()} genres");
       return List.from(
         dataInResponse['genres'].map(
           (elements) => GenreModel.fromJson(elements),

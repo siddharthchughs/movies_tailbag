@@ -5,33 +5,31 @@ import 'package:mvvm_moviecatalog_app/utility/genres_utility.dart';
 import 'package:provider/provider.dart';
 
 class GenresItemWidgetPvdr extends StatelessWidget {
-  const GenresItemWidgetPvdr({
-    super.key,
-    //required this.moviesModel
-  });
-  //  MoviesModel moviesModel;
+  GenresItemWidgetPvdr({super.key, required this.moviesModel});
+  MoviesModel moviesModel;
 
   @override
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<MoviesModel>(context);
-    List<GenreModel> genres = GenresUtility.movieGenre(
+    List<GenreModel> genresByProvider = GenresUtility.movieGenre(
       movieProvider.genreIds,
       context,
     );
 
-    // List<GenreModel> genres = GenresUtility.movieGenre(
-    //   [],
-    //   context,
-    //   //moviesModel.genreIds
+    // List<GenreModel> genres = GenresUtility.movieGenreFromCache(
+    //   moviesModel.genreIds,
     // );
-    //    final genreProviders = Provider
+
     return Wrap(
       direction: Axis.horizontal,
       alignment: WrapAlignment.start,
       spacing: 2.0,
       children: List.generate(
-        genres.length,
-        (index) => chipWidget(generItem: genres[index].name, context: context),
+        genresByProvider.length,
+        (index) => chipWidget(
+          generItem: genresByProvider[index].name,
+          context: context,
+        ),
       ),
     );
   }

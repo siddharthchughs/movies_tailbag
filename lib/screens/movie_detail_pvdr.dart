@@ -81,7 +81,9 @@ class MovieDetailPvdr extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 15.0),
-                                GenresItemWidgetPvdr(),
+                                GenresItemWidgetPvdr(
+                                  moviesModel: movieProvider,
+                                ),
                                 const SizedBox(height: 15.0),
                                 Text(
                                   movieProvider.overview,

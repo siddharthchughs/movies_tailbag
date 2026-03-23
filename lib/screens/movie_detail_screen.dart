@@ -3,12 +3,11 @@ import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
 import 'package:mvvm_moviecatalog_app/widgets/genres_item_widget_pvdr.dart';
 
+import '../models/movies_model.dart';
+
 class MovieDetail extends StatelessWidget {
-  const MovieDetail({
-    super.key,
-    //required this.moviesModel
-  });
-  //  MoviesModel moviesModel;
+  MovieDetail({super.key, required this.moviesModel});
+  MoviesModel moviesModel;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,7 @@ class MovieDetail extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 15.0),
-                                GenresItemWidgetPvdr(),
+                                GenresItemWidgetPvdr(moviesModel: moviesModel),
                                 const SizedBox(height: 15.0),
                                 Text(
                                   'moviesModel.overview',

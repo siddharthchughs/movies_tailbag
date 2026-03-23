@@ -91,7 +91,7 @@ class _MoviesState extends State<MovieScreen> {
           ),
           IconButton(
             onPressed: () async {},
-            icon: Icon(MyCustomIcons.colorModeChange, color: Colors.blueAccent),
+            icon: Icon(MyCustomIcons.colorModeDark, color: Colors.blueAccent),
           ),
         ],
       ),

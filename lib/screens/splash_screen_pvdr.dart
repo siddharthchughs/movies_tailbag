@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/screens/movie_screenpvdr.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
 import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
-import 'package:mvvm_moviecatalog_app/viewmodel/favorites_providers.dart';
-import 'package:mvvm_moviecatalog_app/viewmodel/movie_provider.dart'
-    show MovieProvider;
+import 'package:mvvm_moviecatalog_app/viewmodel/moviebag_provider.dart';
+import 'package:mvvm_moviecatalog_app/viewmodel/redo_favorite_provider.dart';
 import 'package:mvvm_moviecatalog_app/widgets/error_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -14,39 +14,39 @@ class SplashScreenPvdr extends StatelessWidget {
   Future<void> _loadInitialData(BuildContext context) async {
     await Future.microtask(() async {
       if (!context.mounted) return;
-      await Provider.of<FavoritesProviders>(
+      await Provider.of<RedoFavoriteProvider>(
         context,
         listen: false,
-      ).loadFavorites();
+      ).loadLocalFavorites();
+
       if (!context.mounted) return;
-      await Provider.of<MovieProvider>(context, listen: false).getMovies();
+      await Provider.of<MoviebagProvider>(
+        context,
+        listen: false,
+      ).getPopularMovies();
     });
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   Provider.of<MovieProvider>(context, listen: false).getMovies();
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    final movieProvider = Provider.of<MovieProvider>(context, listen: false);
+    final movieProvider = Provider.of<MoviebagProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.blueAccent.shade200,
       body: FutureBuilder(
         future: _loadInitialData(context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            if (movieProvider.movieGenresLoaded.isNotEmpty) {
+            return const Center(child: CupertinoActivityIndicator());
+          } else if (snapshot.hasError) {
+            if (movieProvider.genre.isNotEmpty) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 getIt<NavigationService>().navigationReplace(MovieScreenpvdr());
               });
             }
-            return Provider.of<MovieProvider>(context).isLoading
+            return Provider.of<MoviebagProvider>(context).isFetched
                 ? const Center(child: CircularProgressIndicator.adaptive())
                 : MyErrorWidget(
-                    errorText: 'Error ${snapshot.error.toString()}',
+                    errorText: snapshot.error.toString(),
                     retryConnection: () async {
                       await _loadInitialData(context);
                     },

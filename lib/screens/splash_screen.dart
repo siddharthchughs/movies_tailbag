@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/repository/movies_repository.dart';
-import 'package:mvvm_moviecatalog_app/screens/movie_screen.dart';
+import 'package:mvvm_moviecatalog_app/screens/movie_screenpvdr.dart';
 import 'package:mvvm_moviecatalog_app/service/init_getit.dart';
 import 'package:mvvm_moviecatalog_app/service/navigation_service.dart';
 import 'package:mvvm_moviecatalog_app/widgets/error_widget.dart';
@@ -16,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isLoading = true;
   String _errorMessage = '';
   final _movieRespository = getIt<MoviesRepository>();
+  final moviePage = 1;
 
   Future<void> _loadMore() async {
     setState(() {
@@ -24,7 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     try {
       await _movieRespository.getGenres();
-      await getIt<NavigationService>().clearStackNavigate(MovieScreen());
+      await _movieRespository.getPopularMovies(page: moviePage);
+      await getIt<NavigationService>().navigateTo(MovieScreenpvdr());
     } catch (err) {
       _errorMessage = err.toString();
     } finally {
@@ -56,7 +58,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             )
-          : MyErrorWidget(errorText: 'errorText', retryConnection: _loadMore),
+          : MyErrorWidget(
+              errorText: 'errorText $_errorMessage',
+              retryConnection: _loadMore,
+            ),
     );
   }
 }

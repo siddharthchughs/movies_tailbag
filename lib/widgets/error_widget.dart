@@ -13,23 +13,40 @@ class MyErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(MyCustomIcons.error, color: Colors.red, size: 48),
-        const SizedBox(height: 20.0),
-        Text(
-          'Error: $errorText',
-          style: TextStyle(color: Colors.redAccent.shade400, fontSize: 30.0),
-        ),
-        const SizedBox(height: 20.0),
+    return Container(
+      alignment: AlignmentDirectional.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            MyCustomIcons.error,
+            color: Colors.amberAccent.shade400,
+            size: 48,
+          ),
+          const SizedBox(height: 20.0),
+          Text(
+            'Error: $errorText',
+            style: TextStyle(color: Colors.lightGreen.shade400, fontSize: 30.0),
+          ),
+          const SizedBox(height: 20.0),
 
-        ElevatedButton(
-          onPressed: retryConnection(),
-          child: Text('Retry Again'),
-        ),
-      ],
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.amberAccent.shade400,
+              textStyle: const TextStyle(color: Colors.white, fontSize: 18.0),
+            ),
+            onPressed: () {
+              retryConnection();
+            },
+            child: Text(
+              'Retry Again',
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

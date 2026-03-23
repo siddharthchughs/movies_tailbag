@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_moviecatalog_app/constants/my_custom_icons.dart';
-import 'package:mvvm_moviecatalog_app/models/movies_model.dart';
 import 'package:mvvm_moviecatalog_app/widgets/cache_image.dart';
+import 'package:mvvm_moviecatalog_app/widgets/genres_item_widget_pvdr.dart';
+
+import '../models/movies_model.dart';
 
 class MovieDetail extends StatelessWidget {
   MovieDetail({super.key, required this.moviesModel});
@@ -19,8 +21,8 @@ class MovieDetail extends StatelessWidget {
               height: size.height * 0.45,
               width: double.infinity,
               child: CacheImage(
-                url:
-                    'https://image.tmdb.org/t/p/w500/${moviesModel.backdropPath}',
+                url: '${MyCustomIcons.arrow_back}',
+                //                    '${MyApiConstants.imageBaseUrl_500D}${moviesModel.backdropPath}',
               ),
             ),
             SingleChildScrollView(
@@ -40,7 +42,7 @@ class MovieDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 25.0),
-                                Text(moviesModel.title),
+                                Text('moviesModel.title'),
                                 const SizedBox(height: 8),
                                 const SizedBox(height: 5.0),
                                 Row(
@@ -55,7 +57,10 @@ class MovieDetail extends StatelessWidget {
                                             color: Colors.blue,
                                           ),
                                           SizedBox(width: 12.0),
-                                          Text('${moviesModel.voteAverage}/10'),
+                                          Text(
+                                            '0.8/10',
+                                            //                                            '${moviesModel.voteAverage.toStringAsFixed(1)}/10',
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -66,7 +71,7 @@ class MovieDetail extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Text(moviesModel.releaseDate),
+                                          Text('moviesModel.releaseDate'),
                                         ],
                                       ),
                                     ),
@@ -74,10 +79,10 @@ class MovieDetail extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 15.0),
-                                // GenresListWidget(),
+                                GenresItemWidgetPvdr(moviesModel: moviesModel),
                                 const SizedBox(height: 15.0),
                                 Text(
-                                  moviesModel.overview,
+                                  'moviesModel.overview',
                                   textAlign: TextAlign.justify,
                                 ),
                               ],
@@ -90,12 +95,12 @@ class MovieDetail extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.amberAccent,
+                            color: Colors.white,
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Icon(MyCustomIcons.favorites),
+                            child: Icon(MyCustomIcons.unselectedfavorite),
                           ),
                         ),
                       ),

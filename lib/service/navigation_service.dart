@@ -19,6 +19,12 @@ class NavigationService {
     );
   }
 
+  Future<dynamic>? navigationReplace(Widget navigate) {
+    return navigationKey.currentState?.pushReplacement(
+      MaterialPageRoute(builder: (context) => navigate),
+    );
+  }
+
   void showDialog(Widget widget) async {
     await showAdaptiveDialog(
       barrierDismissible: true,

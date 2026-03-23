@@ -1,4 +1,6 @@
-class MoviesModel {
+import 'package:flutter/material.dart';
+
+class MoviesModel with ChangeNotifier {
   bool? adult;
   String? backdropPath;
   List<int> genreIds;
@@ -48,6 +50,25 @@ class MoviesModel {
       voteAverage: mapJson['vote_average'],
       voteCount: mapJson['vote_count'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['genre_ids'] = genreIds;
+    data['id'] = id;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
+    data['overview'] = overview;
+    data['popularity'] = popularity;
+    data['poster_path'] = posterPath;
+    data['release_date'] = releaseDate;
+    data['title'] = title;
+    data['video'] = video;
+    data['vote_average'] = voteAverage;
+    data['vote_count'] = voteCount;
+    return data;
   }
 
   // MoviesModel.fromJson(Map<String, dynamic> json) {
